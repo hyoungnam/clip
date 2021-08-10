@@ -13,6 +13,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "sass": "^1.37.5",
     "typescript": "^4.3.5",
     "web-vitals": "^1.1.2"
   },
@@ -38,6 +39,26 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-config-standard": "^22.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "stylelint --fix",
+      "prettier --write"
     ]
   }
 }
