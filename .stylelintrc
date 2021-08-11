@@ -1,4 +1,26 @@
 {
   "extends": "stylelint-config-sass-guidelines",
-  "rules": {}
+  "rules": {
+    "order/properties-alphabetical-order": null, 
+	  "order/properties-order": 
+    [
+	  	"display",
+	  	"overflow",
+	  	"float",
+	  	"position",
+		"left",
+		"right",
+		"top",
+		"bottom",
+	  	"width",
+	  	"height",
+	  	"margin",
+	  	"padding",
+	  	"border",
+	  	"background",
+	  	"color",
+	  	"font",
+	  	"animation",
+	  ]
+  }
 }

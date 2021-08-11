@@ -1,12 +1,14 @@
 import React from 'react'
-
+import Board from 'pages/Board'
+import s from './app.module.scss'
 function App() {
   return (
     <div className="App">
-      <h1>안녕하세요</h1>
-      <main>Board</main>
+      <main className={s.main}>
+        <Board />
+      </main>
     </div>
   )
 }
-
+  
 export default App
