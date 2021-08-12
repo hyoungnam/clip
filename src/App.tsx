@@ -1,6 +1,6 @@
 import React from 'react'
 import Board from 'pages/Board'
-import s from './app.module.scss'
+import s from './App.module.scss'
 function App() {
   return (
     <div className="App">
@@ -10,5 +10,5 @@ function App() {
     </div>
   )
 }
-  
+
 export default App

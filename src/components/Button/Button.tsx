@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './button.module.scss'
+import s from './Button.module.scss'
 
 interface IButton {
   svg?: React.ReactElement

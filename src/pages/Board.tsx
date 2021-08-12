@@ -2,7 +2,7 @@ import React from 'react'
 import { useCanvasRef } from 'hooks/useCanvasRef'
 import { IconQuick, IconAdd } from 'components/svgs'
 import { Button } from 'components/Button'
-import s from './board.module.scss'
+import s from './Board.module.scss'
 
 export default function Board() {
   const canvasRef = useCanvasRef()
