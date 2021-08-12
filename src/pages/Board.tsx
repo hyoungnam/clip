@@ -1,5 +1,7 @@
 import React from 'react'
 import { useCanvasRef } from 'hooks/useCanvasRef'
+import { IconQuick, IconAdd } from 'components/svgs'
+import { Button } from 'components/Button'
 import s from './board.module.scss'
 
 export default function Board() {
@@ -10,7 +12,10 @@ export default function Board() {
       <canvas className={s.canvas} ref={canvasRef} />
       <section className={s.section}>
         <div className={s.container}>
-          <span>card</span>
+          <div className={s.buttons}>
+            <Button svg={<IconQuick />} />
+            <Button svg={<IconAdd />} />
+          </div>
         </div>
       </section>
     </>

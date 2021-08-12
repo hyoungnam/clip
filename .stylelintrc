@@ -19,7 +19,7 @@
 	  	"border",
 	  	"background",
 	  	"color",
-	  	"font",
+	"font",
 	  	"animation",
 	  ]
   }
