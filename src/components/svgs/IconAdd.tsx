@@ -5,7 +5,7 @@ function IconAdd() {
     <svg
       width="36px"
       height="36px"
-      viewBox="0 0 40 32"
+      viewBox="0 0 40 26"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"

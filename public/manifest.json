@@ -1,5 +1,5 @@
 {
-  "short_name": "Clip Memo",
+  "short_name": "Clip",
   "name": "Clip Memo",
   "description": "clip your short memo!",
   "version": "1.0",
@@ -7,7 +7,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["tabs", "background"],
+  "permissions": ["tabs", "storage", "background"],
   "action": {
     "default_title": "Click Me"
   }

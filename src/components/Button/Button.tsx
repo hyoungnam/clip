@@ -1,12 +1,13 @@
 import React from 'react'
+import { IButton } from 'libs/types'
 import s from './Button.module.scss'
 
-interface IButton {
-  svg?: React.ReactElement
-}
-
-function Button({ svg }: IButton) {
-  return <button className={s.button}>{svg}</button>
+function Button({ svg, handleOnClick }: IButton) {
+  return (
+    <button className={s.button} onClick={handleOnClick}>
+      {svg}
+    </button>
+  )
 }
 
 export { Button }

@@ -4,3 +4,5 @@ export const CTX = {
   TRANSPARENT_RGBA: 'rgba(255, 255, 255, 0.2)',
   DISTANCE: 2,
 }
+
+export const NANO_SIZE = 10
