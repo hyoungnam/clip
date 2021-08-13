@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { IconClip } from 'components/Svgs'
+import { NOTE_ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
 import s from './Note.module.scss'
 
-function Note({ id, content, clientXY: { x, y }, updateNote }: INote) {
+function Note({ id, content, clientXY: { x, y }, dispatchNote }: INote) {
   const [isFocus, setFocus] = useState(false)
 
   const handleOnBlur = ({ target: { innerHTML } }: React.FocusEvent) => {
@@ -18,7 +19,7 @@ function Note({ id, content, clientXY: { x, y }, updateNote }: INote) {
   const updateEditedNote = (id: string, innerHTML: string) => {
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
-    updateNote && updateNote(id, innerHTML)
+    dispatchNote && dispatchNote({ type: NOTE_ACTION.UPDATE, payload: { id, innerHTML } })
     setFocus(false)
   }
 

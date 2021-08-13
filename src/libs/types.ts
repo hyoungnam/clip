@@ -4,7 +4,11 @@ export interface INote {
   id: string
   content: string
   clientXY: { x: number; y: number }
-  updateNote?: (id: string, htmlString: string) => void
+  dispatchNote?: ({ type, payload }: INoteDispatch) => void
+}
+export interface INoteDispatch {
+  type: string
+  payload: any
 }
 export interface IButton {
   svg?: React.ReactElement

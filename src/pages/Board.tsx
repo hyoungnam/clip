@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useCanvasRef } from 'hooks/useCanvasRef'
-import { useCreateNote } from 'hooks/useCreateNote'
+import { useNote, NOTE_ACTION } from 'hooks/useNote'
 import { IconQuick, IconAdd } from 'components/Svgs'
 import { Button } from 'components/Button'
 import { Note } from 'components/Note'
@@ -10,7 +10,7 @@ import s from './Board.module.scss'
 function Board() {
   const [isCreateMode, setCreateMode] = useState(false)
   const [isMouseClicked, setMouseClicked] = useState(false)
-  const [notes, createNote, updateNote] = useCreateNote([])
+  const [notes, dispatchNote] = useNote([])
   const canvasRef = useCanvasRef()
   const boardRef = useRef<HTMLDivElement>(null)
 
@@ -20,7 +20,7 @@ function Board() {
   const handleMouseDown = ({ clientX, clientY }: React.MouseEvent) => {
     if (isCreateMode) {
       setMouseClicked(true)
-      createNote(clientX, clientY)
+      dispatchNote({ type: NOTE_ACTION.CREATE, payload: { clientX, clientY } })
     }
   }
   const handleMouseMove = ({ clientX, clientY }: React.MouseEvent) => {
@@ -53,7 +53,7 @@ function Board() {
           ref={boardRef}
         >
           {notes.map((note) => (
-            <Note key={note.id} {...note} updateNote={updateNote} />
+            <Note key={note.id} {...note} dispatchNote={dispatchNote} />
           ))}
           <div className={s.buttons}>
             <Button svg={<IconQuick />} handleOnClick={handleOnClick} />
