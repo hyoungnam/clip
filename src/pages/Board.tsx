@@ -17,20 +17,32 @@ function Board() {
   const handleOnClick = () => {
     setCreateMode(true)
   }
-  const handleMouseDown = ({ clientX, clientY }: React.MouseEvent) => {
+  const handleOnMouseDown = ({ clientX, clientY }: React.MouseEvent) => {
     if (isCreateMode) {
       setMouseClicked(true)
       dispatchNote({ type: NOTE_ACTION.CREATE, payload: { clientX, clientY } })
     }
   }
-  const handleMouseMove = ({ clientX, clientY }: React.MouseEvent) => {
+  const handleOnMouseMove = ({ clientX, clientY }: React.MouseEvent) => {
     isCreateMode && isMouseClicked && setNoteDimension(notes, { clientX, clientY, boardRef })
   }
-  const handleMouseUp = () => {
+  const handleOnMouseUp = () => {
     if (isCreateMode && isMouseClicked) {
       setCreateMode(false)
       setMouseClicked(false)
     }
+  }
+  const handleOnDragOver = (e: any) => {
+    e.preventDefault()
+  }
+
+  const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    const [id, startClientX, startClientY] = e.dataTransfer.getData('drag').split(',')
+    const left = Number(e.clientX) - Number(startClientX)
+    const top = Number(e.clientY) - Number(startClientY)
+    dispatchNote({ type: NOTE_ACTION.DRAG, payload: { left, top, id } })
+    const activeEl = document.activeElement as HTMLElement
+    activeEl.blur()
   }
 
   const setNoteDimension = (notes: INote[], { clientX, clientY, boardRef }: any) => {
@@ -47,13 +59,15 @@ function Board() {
       <section className={s.section}>
         <div
           className={s.container}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
+          onMouseDown={handleOnMouseDown}
+          onMouseMove={handleOnMouseMove}
+          onMouseUp={handleOnMouseUp}
+          onDrop={handleOnDrop}
+          onDragOver={handleOnDragOver}
           ref={boardRef}
         >
           {notes.map((note) => (
-            <Note key={note.id} {...note} dispatchNote={dispatchNote} />
+            <Note key={note.id} {...note} dispatchNote={dispatchNote} isCreateMode={isCreateMode} />
           ))}
           <div className={s.buttons}>
             <Button svg={<IconQuick />} handleOnClick={handleOnClick} />

@@ -4,7 +4,7 @@ import { NOTE_ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
 import s from './Note.module.scss'
 
-function Note({ id, content, clientXY: { x, y }, dispatchNote }: INote) {
+function Note({ id, content, clientXY: { x, y }, dispatchNote, isCreateMode }: INote) {
   const [isFocus, setFocus] = useState(false)
 
   const handleOnBlur = ({ target: { innerHTML } }: React.FocusEvent) => {
@@ -16,6 +16,11 @@ function Note({ id, content, clientXY: { x, y }, dispatchNote }: INote) {
   const handleOnKeyDown = ({ key, target }: React.KeyboardEvent) => {
     key === 'Escape' && updateEditedNote(id, (target as HTMLElement).innerHTML)
   }
+  const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    const startClientX = Number(e.clientX) - Number((e.target as HTMLElement).offsetLeft)
+    const startClientY = Number(e.clientY) - Number((e.target as HTMLElement).offsetTop)
+    e.dataTransfer.setData('drag', `${id},${startClientX},${startClientY}`)
+  }
   const updateEditedNote = (id: string, innerHTML: string) => {
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
@@ -25,8 +30,13 @@ function Note({ id, content, clientXY: { x, y }, dispatchNote }: INote) {
 
   return (
     <>
-      <div className={`${s.note} ${isFocus ? s.resize : ''}`} style={{ top: y, left: x }}>
-        <IconClip isFocus={isFocus} />
+      <div
+        className={`${s.note} ${isFocus ? s.resize : ''}`}
+        style={{ top: y, left: x }}
+        draggable={!isCreateMode}
+        onDragStart={handleOnDragStart}
+      >
+        {!isFocus && <IconClip isFocus={isFocus} />}
         <p
           className={s.content}
           contentEditable
