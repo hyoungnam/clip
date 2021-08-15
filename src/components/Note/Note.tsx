@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { IconClip } from 'components/Svgs'
 import { NOTE_ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
-import s from './Note.module.scss'
 import { useNoteResize } from 'hooks/useNoteResize'
+import s from './Note.module.scss'
 
 function Note({
   id,

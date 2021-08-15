@@ -14,6 +14,10 @@ function Board() {
   const canvasRef = useCanvasRef()
   const boardRef = useRef<any>(null)
 
+  const handleOnClickQuick = () => {
+    dispatchNote({ type: NOTE_ACTION.CREATE_QUICK })
+  }
+
   const handleOnClick = () => {
     setCreateMode(true)
   }
@@ -81,7 +85,7 @@ function Board() {
             <Note key={note.id} {...note} dispatchNote={dispatchNote} isCreateMode={isCreateMode} />
           ))}
           <div className={s.buttons}>
-            <Button svg={<IconQuick />} handleOnClick={handleOnClick} />
+            <Button svg={<IconQuick />} handleOnClick={handleOnClickQuick} />
             <Button svg={<IconAdd />} handleOnClick={handleOnClick} />
           </div>
         </div>

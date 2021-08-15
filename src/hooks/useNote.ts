@@ -6,6 +6,7 @@ import { INote } from 'libs/types'
 
 export const NOTE_ACTION = Object.freeze({
   CREATE: 'CREATE',
+  CREATE_QUICK: 'CREATE_QUICK',
   UPDATE: 'UPDATE',
   DRAG: 'DRAG',
   RESIZE: 'RESIZE',
@@ -20,6 +21,8 @@ const reducer = (notes: INote[], action: any) => {
   switch (action.type) {
     case 'CREATE':
       return createNote(notes, action.payload)
+    case 'CREATE_QUICK':
+      return createQuickNote(notes)
     case 'UPDATE':
       return updateNote(notes, action.payload)
     case 'DRAG':
@@ -40,6 +43,18 @@ const createNote = (notes: INote[], payload: { clientX: number; clientY: number 
       width: 20,
       height: 20,
       clientXY: { x: payload.clientX - 10, y: payload.clientY - 10 },
+    },
+  ]
+}
+const createQuickNote = (notes: INote[]) => {
+  return [
+    ...notes,
+    {
+      id: nanoid(NANO_SIZE),
+      content: '',
+      width: 144,
+      height: 144,
+      clientXY: { x: 32, y: 32 },
     },
   ]
 }
