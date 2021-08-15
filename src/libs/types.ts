@@ -3,6 +3,8 @@ import React from 'react'
 export interface INote {
   id: string
   content: string
+  width: number
+  height: number
   clientXY: { x: number; y: number }
   dispatchNote?: ({ type, payload }: INoteDispatch) => void
   isCreateMode?: boolean

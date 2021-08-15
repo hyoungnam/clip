@@ -3,10 +3,19 @@ import { IconClip } from 'components/Svgs'
 import { NOTE_ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
 import s from './Note.module.scss'
+import { useNoteResize } from 'hooks/useNoteResize'
 
-function Note({ id, content, clientXY: { x, y }, dispatchNote, isCreateMode }: INote) {
+function Note({
+  id,
+  content,
+  width,
+  height,
+  clientXY: { x, y },
+  dispatchNote,
+  isCreateMode,
+}: INote) {
   const [isFocus, setFocus] = useState(false)
-
+  const noteRef = useNoteResize(id, dispatchNote)
   const handleOnBlur = ({ target: { innerHTML } }: React.FocusEvent) => {
     updateEditedNote(id, innerHTML)
   }
@@ -32,9 +41,10 @@ function Note({ id, content, clientXY: { x, y }, dispatchNote, isCreateMode }: I
     <>
       <div
         className={`${s.note} ${isFocus ? s.resize : ''}`}
-        style={{ top: y, left: x }}
+        style={{ top: y, left: x, width, height }}
         draggable={!isCreateMode}
         onDragStart={handleOnDragStart}
+        ref={noteRef}
       >
         {!isFocus && <IconClip isFocus={isFocus} />}
         <p
@@ -50,4 +60,4 @@ function Note({ id, content, clientXY: { x, y }, dispatchNote, isCreateMode }: I
     </>
   )
 }
-export { Note }
+export default Note

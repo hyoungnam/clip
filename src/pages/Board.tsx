@@ -3,7 +3,7 @@ import { useCanvasRef } from 'hooks/useCanvasRef'
 import { useNote, NOTE_ACTION } from 'hooks/useNote'
 import { IconQuick, IconAdd } from 'components/Svgs'
 import { Button } from 'components/Button'
-import { Note } from 'components/Note'
+import Note from 'components/Note'
 import { INote } from 'libs/types'
 import s from './Board.module.scss'
 
@@ -12,7 +12,7 @@ function Board() {
   const [isMouseClicked, setMouseClicked] = useState(false)
   const [notes, dispatchNote] = useNote([])
   const canvasRef = useCanvasRef()
-  const boardRef = useRef<HTMLDivElement>(null)
+  const boardRef = useRef<any>(null)
 
   const handleOnClick = () => {
     setCreateMode(true)
@@ -28,11 +28,12 @@ function Board() {
   }
   const handleOnMouseUp = () => {
     if (isCreateMode && isMouseClicked) {
+      setNoteResize()
       setCreateMode(false)
       setMouseClicked(false)
     }
   }
-  const handleOnDragOver = (e: any) => {
+  const handleOnDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
   }
 
@@ -52,13 +53,23 @@ function Board() {
     note.style.width = `${clientX - x}px`
     note.style.height = `${clientY - y}px`
   }
+  const setNoteResize = () => {
+    const length = notes.length
+    const note = boardRef.current.childNodes[length - 1]
+    const width = Number(note.style.width.slice(0, -2))
+    const height = Number(note.style.height.slice(0, -2))
+    dispatchNote({
+      type: NOTE_ACTION.RESIZE,
+      payload: { id: notes[length - 1].id, width, height },
+    })
+  }
 
   return (
     <>
       <canvas className={s.canvas} ref={canvasRef} />
       <section className={s.section}>
         <div
-          className={s.container}
+          className={`${s.container} ${isCreateMode ? s.crosshair : ''}`}
           onMouseDown={handleOnMouseDown}
           onMouseMove={handleOnMouseMove}
           onMouseUp={handleOnMouseUp}
