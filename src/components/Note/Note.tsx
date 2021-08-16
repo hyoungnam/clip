@@ -9,14 +9,17 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
   const [isFocus, setFocus] = useState(false)
   const [isDragged, setDragged] = useState(false)
   const noteRef = useNoteResize(id, dispatch)
-  const handleOnBlur = ({ target: { innerHTML } }: React.FocusEvent) => {
-    updateEditedNote(id, innerHTML)
+  const handleOnBlur = ({ target: { value } }: React.FocusEvent<HTMLTextAreaElement>) => {
+    updateNote(id, value)
   }
   const handleOnFocus = () => {
     setFocus(true)
   }
-  const handleOnKeyDown = ({ key, target }: React.KeyboardEvent) => {
-    key === 'Escape' && updateEditedNote(id, (target as HTMLElement).innerHTML)
+  const handleOnKeyDown = ({
+    key,
+    currentTarget: { value },
+  }: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    key === 'Escape' && updateNote(id, value)
   }
   const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     setDragged(true)
@@ -30,10 +33,10 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
   const deleteNote = () => {
     dispatch && dispatch({ type: NOTE_ACTION.DELETE, payload: { id } })
   }
-  const updateEditedNote = (id: string, innerHTML: string) => {
+  const updateNote = (id: string, value: string) => {
+    dispatch && dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, value } })
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
-    dispatch && dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, innerHTML } })
     setFocus(false)
   }
 
@@ -48,15 +51,13 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
         ref={noteRef}
       >
         {!isFocus && <IconClip isFocus={isFocus} deleteNote={deleteNote} />}
-        <p
-          className={s.content}
-          contentEditable
-          suppressContentEditableWarning
-          dangerouslySetInnerHTML={{ __html: content }}
+        <textarea
+          className={`${s.content}`}
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}
           onKeyDown={handleOnKeyDown}
-        ></p>
+          defaultValue={content}
+        ></textarea>
       </div>
     </>
   )

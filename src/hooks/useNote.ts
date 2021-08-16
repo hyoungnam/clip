@@ -1,5 +1,4 @@
 import { useReducer } from 'react'
-import DOMPurify from 'dompurify'
 import { nanoid } from 'nanoid'
 import { NANO_SIZE } from 'libs/constants'
 import { INote } from 'libs/types'
@@ -62,10 +61,8 @@ const createQuickNote = (notes: INote[]) => {
   ]
 }
 
-const updateNote = (notes: INote[], payload: { id: string; htmlString: string }) => {
-  return notes.map((note) =>
-    note.id === payload.id ? { ...note, content: DOMPurify.sanitize(payload.htmlString) } : note
-  )
+const updateNote = (notes: INote[], payload: { id: string; value: string }) => {
+  return notes.map((note) => (note.id === payload.id ? { ...note, content: payload.value } : note))
 }
 const deleteNote = (notes: INote[], payload: { id: string }) => {
   return notes.filter((note) => note.id !== payload.id)
