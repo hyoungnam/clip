@@ -8,6 +8,7 @@ export const NOTE_ACTION = Object.freeze({
   CREATE: 'CREATE',
   CREATE_QUICK: 'CREATE_QUICK',
   UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
   DRAG: 'DRAG',
   RESIZE: 'RESIZE',
 })
@@ -25,6 +26,8 @@ const reducer = (notes: INote[], action: any) => {
       return createQuickNote(notes)
     case 'UPDATE':
       return updateNote(notes, action.payload)
+    case 'DELETE':
+      return deleteNote(notes, action.payload)
     case 'DRAG':
       return dragNote(notes, action.payload)
     case 'RESIZE':
@@ -63,6 +66,9 @@ const updateNote = (notes: INote[], payload: { id: string; htmlString: string })
   return notes.map((note) =>
     note.id === payload.id ? { ...note, content: DOMPurify.sanitize(payload.htmlString) } : note
   )
+}
+const deleteNote = (notes: INote[], payload: { id: string }) => {
+  return notes.filter((note) => note.id !== payload.id)
 }
 
 const dragNote = (notes: INote[], payload: { id: string; left: number; top: number }) => {

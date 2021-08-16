@@ -1,6 +1,17 @@
-.clip {
+.container {
   position: absolute;
   top: -24px;
   width: 100%;
   text-align: center;
+}
+
+.clip {
+  width: auto;
+  transition: all 1s ease-out;
+  transform: translateY(0) rotate(0deg) scale(1);
+
+  &:hover {
+    transform: translateY(-10px) rotate(-7deg) scale(1.2);
+    transition-duration: 0.6s;
+  }
 }

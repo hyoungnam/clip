@@ -22,6 +22,9 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
     const startClientY = Number(e.clientY) - Number((e.target as HTMLElement).offsetTop)
     e.dataTransfer.setData('drag', `${id},${startClientX},${startClientY}`)
   }
+  const deleteNote = () => {
+    dispatch && dispatch({ type: NOTE_ACTION.DELETE, payload: { id } })
+  }
   const updateEditedNote = (id: string, innerHTML: string) => {
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
@@ -38,7 +41,7 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
         onDragStart={handleOnDragStart}
         ref={noteRef}
       >
-        {!isFocus && <IconClip isFocus={isFocus} />}
+        {!isFocus && <IconClip isFocus={isFocus} deleteNote={deleteNote} />}
         <p
           className={s.content}
           contentEditable
