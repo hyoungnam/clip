@@ -7,6 +7,7 @@ import s from './Note.module.scss'
 
 function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCreateMode }: INote) {
   const [isFocus, setFocus] = useState(false)
+  const [isDragged, setDragged] = useState(false)
   const noteRef = useNoteResize(id, dispatch)
   const handleOnBlur = ({ target: { innerHTML } }: React.FocusEvent) => {
     updateEditedNote(id, innerHTML)
@@ -18,9 +19,13 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
     key === 'Escape' && updateEditedNote(id, (target as HTMLElement).innerHTML)
   }
   const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    setDragged(true)
     const startClientX = Number(e.clientX) - Number((e.target as HTMLElement).offsetLeft)
     const startClientY = Number(e.clientY) - Number((e.target as HTMLElement).offsetTop)
     e.dataTransfer.setData('drag', `${id},${startClientX},${startClientY}`)
+  }
+  const handleOnDragEnd = () => {
+    setDragged(false)
   }
   const deleteNote = () => {
     dispatch && dispatch({ type: NOTE_ACTION.DELETE, payload: { id } })
@@ -35,10 +40,11 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
   return (
     <>
       <div
-        className={`${s.note} ${isFocus ? s.resize : ''}`}
+        className={`${s.note} ${isFocus ? s.resize : ''} ${isDragged ? s.dragged : ''}`}
         style={{ top: y, left: x, width, height }}
         draggable={!isCreateMode}
         onDragStart={handleOnDragStart}
+        onDragEnd={handleOnDragEnd}
         ref={noteRef}
       >
         {!isFocus && <IconClip isFocus={isFocus} deleteNote={deleteNote} />}
