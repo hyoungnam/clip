@@ -5,17 +5,9 @@ import { INote } from 'libs/types'
 import { useNoteResize } from 'hooks/useNoteResize'
 import s from './Note.module.scss'
 
-function Note({
-  id,
-  content,
-  width,
-  height,
-  clientXY: { x, y },
-  dispatchNote,
-  isCreateMode,
-}: INote) {
+function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCreateMode }: INote) {
   const [isFocus, setFocus] = useState(false)
-  const noteRef = useNoteResize(id, dispatchNote)
+  const noteRef = useNoteResize(id, dispatch)
   const handleOnBlur = ({ target: { innerHTML } }: React.FocusEvent) => {
     updateEditedNote(id, innerHTML)
   }
@@ -33,7 +25,7 @@ function Note({
   const updateEditedNote = (id: string, innerHTML: string) => {
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
-    dispatchNote && dispatchNote({ type: NOTE_ACTION.UPDATE, payload: { id, innerHTML } })
+    dispatch && dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, innerHTML } })
     setFocus(false)
   }
 

@@ -6,7 +6,7 @@ export interface INote {
   width: number
   height: number
   clientXY: { x: number; y: number }
-  dispatchNote?: ({ type, payload }: INoteDispatch) => void
+  dispatch?: ({ type, payload }: INoteDispatch) => void
   isCreateMode?: boolean
 }
 export interface INoteDispatch {

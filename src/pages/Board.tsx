@@ -10,12 +10,12 @@ import s from './Board.module.scss'
 function Board() {
   const [isCreateMode, setCreateMode] = useState(false)
   const [isMouseClicked, setMouseClicked] = useState(false)
-  const [notes, dispatchNote] = useNote([])
+  const [notes, dispatch] = useNote([])
   const canvasRef = useCanvasRef()
   const boardRef = useRef<any>(null)
 
   const handleOnClickQuick = () => {
-    dispatchNote({ type: NOTE_ACTION.CREATE_QUICK })
+    dispatch({ type: NOTE_ACTION.CREATE_QUICK })
   }
 
   const handleOnClick = () => {
@@ -24,7 +24,7 @@ function Board() {
   const handleOnMouseDown = ({ clientX, clientY }: React.MouseEvent) => {
     if (isCreateMode) {
       setMouseClicked(true)
-      dispatchNote({ type: NOTE_ACTION.CREATE, payload: { clientX, clientY } })
+      dispatch({ type: NOTE_ACTION.CREATE, payload: { clientX, clientY } })
     }
   }
   const handleOnMouseMove = ({ clientX, clientY }: React.MouseEvent) => {
@@ -45,7 +45,7 @@ function Board() {
     const [id, startClientX, startClientY] = e.dataTransfer.getData('drag').split(',')
     const left = Number(e.clientX) - Number(startClientX)
     const top = Number(e.clientY) - Number(startClientY)
-    dispatchNote({ type: NOTE_ACTION.DRAG, payload: { left, top, id } })
+    dispatch({ type: NOTE_ACTION.DRAG, payload: { left, top, id } })
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
   }
@@ -62,7 +62,7 @@ function Board() {
     const note = boardRef.current.childNodes[length - 1]
     const width = Number(note.style.width.slice(0, -2))
     const height = Number(note.style.height.slice(0, -2))
-    dispatchNote({
+    dispatch({
       type: NOTE_ACTION.RESIZE,
       payload: { id: notes[length - 1].id, width, height },
     })
@@ -82,7 +82,7 @@ function Board() {
           ref={boardRef}
         >
           {notes.map((note) => (
-            <Note key={note.id} {...note} dispatchNote={dispatchNote} isCreateMode={isCreateMode} />
+            <Note key={note.id} {...note} dispatch={dispatch} isCreateMode={isCreateMode} />
           ))}
           <div className={s.buttons}>
             <Button svg={<IconQuick />} handleOnClick={handleOnClickQuick} />

@@ -13,8 +13,8 @@ export const NOTE_ACTION = Object.freeze({
 })
 
 export const useNote = (initialNote = []) => {
-  const [notes, dispatchNote] = useReducer(reducer, initialNote)
-  return [notes, dispatchNote] as const
+  const [notes, dispatch] = useReducer(reducer, initialNote)
+  return [notes, dispatch] as const
 }
 
 const reducer = (notes: INote[], action: any) => {

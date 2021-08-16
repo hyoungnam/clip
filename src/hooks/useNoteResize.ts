@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { debounce } from 'libs/utils'
 import { NOTE_ACTION } from './useNote'
-export const useNoteResize = (id: string, dispatchNote: any) => {
+export const useNoteResize = (id: string, dispatch: any) => {
   const noteRef = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => {
     if (!noteRef.current) {
@@ -10,7 +10,7 @@ export const useNoteResize = (id: string, dispatchNote: any) => {
     let RO = new ResizeObserver(
       debounce(() => {
         noteRef.current &&
-          dispatchNote({
+          dispatch({
             type: NOTE_ACTION.RESIZE,
             payload: {
               id,
