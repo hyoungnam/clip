@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { IconClip } from 'components/Svgs'
 import { NOTE_ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
-import { useNoteResize } from 'hooks/useNoteResize'
 import s from './Note.module.scss'
 
 function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCreateMode }: INote) {
   const [isFocus, setFocus] = useState(false)
   const [isDragged, setDragged] = useState(false)
-  const noteRef = useNoteResize(id, dispatch)
+  const noteRef = useRef<HTMLDivElement>(null)
   const handleOnBlur = ({ target: { value } }: React.FocusEvent<HTMLTextAreaElement>) => {
-    updateNote(id, value)
+    if (noteRef.current) {
+      const width = Number(noteRef.current.style.width.slice(0, -2))
+      const height = Number(noteRef.current.style.height.slice(0, -2))
+      updateNote(id, { value, width, height })
+    }
   }
   const handleOnFocus = () => {
     setFocus(true)
@@ -19,7 +22,11 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
     key,
     currentTarget: { value },
   }: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    key === 'Escape' && updateNote(id, value)
+    if (noteRef.current) {
+      const width = Number(noteRef.current.style.width.slice(0, -2))
+      const height = Number(noteRef.current.style.height.slice(0, -2))
+      key === 'Escape' && updateNote(id, { value, width, height })
+    }
   }
   const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     setDragged(true)
@@ -33,8 +40,11 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
   const deleteNote = () => {
     dispatch && dispatch({ type: NOTE_ACTION.DELETE, payload: { id } })
   }
-  const updateNote = (id: string, value: string) => {
-    dispatch && dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, value } })
+  const updateNote = (
+    id: string,
+    { value, width, height }: { value: string; width: number; height: number }
+  ) => {
+    dispatch && dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, value, width, height } })
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
     setFocus(false)

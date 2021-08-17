@@ -1,3 +1,5 @@
+import { PREFIX } from './constants'
+
 export function debounce(func: any, timeout = 100) {
   let timer: number
   return (...args: any[]) => {
@@ -6,4 +8,8 @@ export function debounce(func: any, timeout = 100) {
       func.apply(this, args)
     }, timeout)
   }
+}
+
+export const addPrefix = (key: string) => {
+  return `${PREFIX}${key}`
 }
