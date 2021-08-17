@@ -4,6 +4,7 @@ import s from './IconClip.module.scss'
 function IconClip({ isFocus, deleteNote }: { isFocus: boolean; deleteNote?: () => void }) {
   return (
     <div className={s.container}>
+    
       <svg
         className={s.clip}
         onClick={deleteNote}

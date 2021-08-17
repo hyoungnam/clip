@@ -2,48 +2,28 @@ import React from 'react'
 
 function IconQuick() {
   return (
-    <svg width="29" height="42" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g filter="url(#filter0_d)">
-        <path
-          d="M4.63286 19.1053L12.9454 0.590418C13.1067 0.231145 13.4639 0 13.8577 0H19.189C19.8723 0 20.3543 0.670004 20.1372 1.31785L16.5997 11.8703C16.3825 12.5181 16.8645 13.1881 17.5478 13.1881H23.1336C23.9319 13.1881 24.4083 14.0774 23.9662 14.742L11.5573 33.3935C10.9698 34.2765 9.59264 33.7579 9.73359 32.7067L11.2165 21.6478C11.2969 21.048 10.8305 20.5149 10.2254 20.5149H5.54513C4.81984 20.5149 4.33579 19.7669 4.63286 19.1053Z"
-          fill="url(#paint0_linear)"
-          shapeRendering="crispEdges"
-        />
-      </g>
+    <svg
+      width="21"
+      height="42"
+      viewBox="0 0 21 28"
+      fill="#353535"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0.632858 20.1053L8.94545 1.59042C9.10675 1.23115 9.4639 1 9.85772 1H15.189C15.8723 1 16.3543 1.67 16.1372 2.31785L12.5997 12.8703C12.3825 13.5181 12.8645 14.1881 13.5478 14.1881H19.1336C19.9319 14.1881 20.4083 15.0774 19.9662 15.742L7.55729 34.3935C6.96982 35.2765 5.59264 34.7579 5.73359 33.7067L7.21651 22.6478C7.29693 22.048 6.83047 21.5149 6.22538 21.5149H1.54513C0.819845 21.5149 0.335794 20.7669 0.632858 20.1053Z"
+        stroke="url(#paint0_linear)"
+      />
       <defs>
-        <filter
-          id="filter0_d"
-          x="0.543945"
-          y="0"
-          width="27.5913"
-          height="41.8429"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="4" />
-          <feGaussianBlur stdDeviation="2" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-        </filter>
         <linearGradient
           id="paint0_linear"
-          x1="15"
-          y1="21"
-          x2="35.5"
-          y2="-7"
+          x1="10"
+          y1="15"
+          x2="29.5"
+          y2="-12"
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#7856FF" />
-          <stop offset="1" stopColor="#7856FF" stopOpacity="0" />
+          <stop offset="1" stopColor="white" stopOpacity="0.62" />
         </linearGradient>
       </defs>
     </svg>

@@ -2,12 +2,17 @@
   display: block;
   width: 60px;
   height: 60px;
-  border: 0;
+  border: 1px solid #a18aff;
   border-radius: 50%;
   margin-bottom: 20px;
+  background-color: transparent;
 
   &:hover {
-    border: 1.6px solid rgba(120, 86, 255, 0.3);
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    background-color: #353535;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
   }
+  // &:hover {
+  //   border: 1.6px solid rgba(120, 86, 255, 0.3);
+  //   box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  // }
 }
