@@ -18,17 +18,15 @@ export const storage = {
   },
   set: (key: string, data: any) => {
     return new Promise<void>((resolve, reject) => {
-      const _key = addPrefix(key)
-      chrome.storage.local.set({ [_key]: data }, () => {
+      chrome.storage.local.set({ [addPrefix(key)]: data }, () => {
         const error = chrome.runtime.lastError
         error ? reject(error) : resolve()
       })
     })
   },
   remove: (key: string) => {
-    const _key = addPrefix(key)
     return new Promise<void>((resolve, reject) => {
-      chrome.storage.local.remove(_key, () => {
+      chrome.storage.local.remove(addPrefix(key), () => {
         const error = chrome.runtime.lastError
         error ? reject(error) : resolve()
       })
