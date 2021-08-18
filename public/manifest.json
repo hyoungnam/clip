@@ -9,6 +9,10 @@
   },
   "permissions": ["tabs", "storage", "background"],
   "action": {
-    "default_title": "Click Me"
+    "default_title": "Open Clip!",
+    "default_icon": "./clip_icon.png"
+  },
+  "icons": {
+    "128": "./clip_icon.png"
   }
 }
