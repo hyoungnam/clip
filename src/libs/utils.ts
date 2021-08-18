@@ -13,3 +13,8 @@ export function debounce(func: any, timeout = 100) {
 export const addPrefix = (key: string) => {
   return `${PREFIX}${key}`
 }
+
+export const blurActiveElement = () => {
+  const activeEl = document.activeElement as HTMLElement
+  activeEl.blur()
+}

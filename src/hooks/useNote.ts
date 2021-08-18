@@ -4,6 +4,7 @@ import { NANO_SIZE } from 'libs/constants'
 import { INote } from 'libs/types'
 import { storage } from 'storage'
 import { handleError } from 'storage/handleError'
+import { blurActiveElement } from 'libs/utils'
 
 export const NOTE_ACTION = Object.freeze({
   CREATE: 'CREATE',
@@ -85,7 +86,10 @@ const createQuickNote = (prevNotes: INote[], setNotes: (notes: INote[]) => void)
 const readNotes = (setNotes: (notes: INote[]) => void) => {
   storage
     .get()
-    .then((notes) => setNotes(notes))
+    .then((notes) => {
+      setNotes(notes)
+      blurActiveElement()
+    })
     .catch(handleError)
 }
 
@@ -135,8 +139,7 @@ const dragNote = (
     .set(payload.id, note)
     .then(() => {
       setNotes(notes)
-      const activeEl = document.activeElement as HTMLElement
-      activeEl.blur()
+      blurActiveElement()
     })
     .catch(handleError)
 }

@@ -8,6 +8,7 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
   const [isFocus, setFocus] = useState(false)
   const [isDragged, setDragged] = useState(false)
   const noteRef = useRef<HTMLDivElement>(null)
+
   const handleOnBlur = ({ target: { value } }: React.FocusEvent<HTMLTextAreaElement>) => {
     if (noteRef.current) {
       const width = Number(noteRef.current.style.width.slice(0, -2))
@@ -67,6 +68,7 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
           onFocus={handleOnFocus}
           onKeyDown={handleOnKeyDown}
           defaultValue={content}
+          autoFocus
         ></textarea>
       </div>
     </>
