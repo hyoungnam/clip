@@ -23,7 +23,8 @@
     "build": "INLINE_RUNTIME_CHUNK=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "cra-build-watch"
+    "watch": "cra-build-watch",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -45,24 +46,22 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.0.154",
-    "@types/dompurify": "^2.2.3",
     "cra-build-watch": "^3.4.0",
     "eslint-config-prettier": "^8.3.0",
-    "husky": "^7.0.1",
+    "husky": "^7.0.0",
     "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
     "stylelint": "^13.13.1",
     "stylelint-config-sass-guidelines": "^8.0.0",
     "stylelint-config-standard": "^22.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.ts": [
+    "src/**/*.{ts,tsx}": [
       "eslint --fix",
-      "stylelint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.scss": [
+      "stylelint",
       "prettier --write"
     ]
   }
