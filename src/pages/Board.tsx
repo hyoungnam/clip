@@ -37,6 +37,7 @@ function Board() {
   }
   const handleOnMouseUp = () => {
     if (isCreateMode && isMouseClicked) {
+      updateNote(notes, boardRef)
       setCreateMode(false)
       setMouseClicked(false)
     }
@@ -58,6 +59,17 @@ function Board() {
     const note = boardRef.current.childNodes[length - 1]
     note.style.width = `${clientX - x}px`
     note.style.height = `${clientY - y}px`
+  }
+  const updateNote = (notes: INote[], boardRef: React.RefObject<HTMLDivElement>) => {
+    const length = notes.length
+    if (boardRef.current) {
+      const note = boardRef.current.childNodes[length - 1] as HTMLElement
+      const id = notes[length - 1].id
+      const value = notes[length - 1].content
+      const width = Number(note.style.width.slice(0, -2))
+      const height = Number(note.style.height.slice(0, -2))
+      dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, value, width, height } })
+    }
   }
 
   return (
