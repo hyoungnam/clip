@@ -6,7 +6,7 @@ import { storage } from 'storage'
 import { handleError } from 'storage/handleError'
 import { blurActiveElement } from 'libs/utils'
 
-export const NOTE_ACTION = Object.freeze({
+export const ACTION = Object.freeze({
   CREATE: 'CREATE',
   CREATE_QUICK: 'CREATE_QUICK',
   READ: 'READ',

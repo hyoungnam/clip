@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useCanvasRef } from 'hooks/useCanvasRef'
-import { useNote, NOTE_ACTION } from 'hooks/useNote'
+import { useNote, ACTION } from 'hooks/useNote'
 import { IconQuick, IconAdd } from 'components/Svgs'
 import { Button } from 'components/Button'
 import Note from 'components/Note'
@@ -15,11 +15,11 @@ function Board() {
   const boardRef = useRef<any>(null)
 
   useEffect(() => {
-    dispatch({ type: NOTE_ACTION.READ })
+    dispatch({ type: ACTION.READ })
   }, [])
 
   const handleOnClickQuick = () => {
-    dispatch({ type: NOTE_ACTION.CREATE_QUICK })
+    dispatch({ type: ACTION.CREATE_QUICK })
   }
 
   const handleOnClick = () => {
@@ -29,7 +29,7 @@ function Board() {
   const handleOnMouseDown = ({ clientX, clientY }: React.MouseEvent) => {
     if (isCreateMode) {
       setMouseClicked(true)
-      dispatch({ type: NOTE_ACTION.CREATE, payload: { clientX, clientY } })
+      dispatch({ type: ACTION.CREATE, payload: { clientX, clientY } })
     }
   }
   const handleOnMouseMove = ({ clientX, clientY }: React.MouseEvent) => {
@@ -50,7 +50,7 @@ function Board() {
     const [id, startClientX, startClientY] = e.dataTransfer.getData('drag').split(',')
     const left = Number(e.clientX) - Number(startClientX)
     const top = Number(e.clientY) - Number(startClientY)
-    dispatch({ type: NOTE_ACTION.DRAG, payload: { left, top, id } })
+    dispatch({ type: ACTION.DRAG, payload: { left, top, id } })
   }
 
   const setNoteDimension = (notes: INote[], { clientX, clientY, boardRef }: any) => {
@@ -68,7 +68,7 @@ function Board() {
       const value = notes[length - 1].content
       const width = Number(note.style.width.slice(0, -2))
       const height = Number(note.style.height.slice(0, -2))
-      dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, value, width, height } })
+      dispatch({ type: ACTION.UPDATE, payload: { id, value, width, height } })
     }
   }
 

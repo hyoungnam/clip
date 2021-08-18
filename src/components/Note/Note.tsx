@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { IconClip } from 'components/Svgs'
-import { NOTE_ACTION } from 'hooks/useNote'
+import { ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
 import s from './Note.module.scss'
 
@@ -39,13 +39,13 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
     setDragged(false)
   }
   const deleteNote = () => {
-    dispatch && dispatch({ type: NOTE_ACTION.DELETE, payload: { id } })
+    dispatch && dispatch({ type: ACTION.DELETE, payload: { id } })
   }
   const updateNote = (
     id: string,
     { value, width, height }: { value: string; width: number; height: number }
   ) => {
-    dispatch && dispatch({ type: NOTE_ACTION.UPDATE, payload: { id, value, width, height } })
+    dispatch && dispatch({ type: ACTION.UPDATE, payload: { id, value, width, height } })
     const activeEl = document.activeElement as HTMLElement
     activeEl.blur()
     setFocus(false)
