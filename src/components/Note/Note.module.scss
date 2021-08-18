@@ -11,7 +11,7 @@
 }
 
 .resize {
-  overflow: auto;
+  overflow: hidden;
   resize: both;
 }
 
@@ -22,4 +22,8 @@
   border: 0;
   background: transparent;
   resize: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
