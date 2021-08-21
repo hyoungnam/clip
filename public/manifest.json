@@ -1,7 +1,7 @@
 {
   "short_name": "Clip",
   "name": "Clip Memo",
-  "description": "clip your short memo!",
+  "description": "clip your memo!",
   "version": "1.0",
   "manifest_version": 3,
   "background": {

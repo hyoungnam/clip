@@ -18,6 +18,13 @@ function Board() {
     dispatch({ type: ACTION.READ })
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('paste', handleOnPaste)
+    return () => {
+      window.removeEventListener('paste', handleOnPaste)
+    }
+  }, [notes])
+
   const handleOnClickQuick = () => {
     dispatch({ type: ACTION.CREATE_QUICK })
   }
@@ -53,6 +60,13 @@ function Board() {
     dispatch({ type: ACTION.DRAG, payload: { left, top, id } })
   }
 
+  const handleOnPaste = (e: any) => {
+    if (document.activeElement?.tagName === 'BODY') {
+      const content = e.clipboardData.getData('Text')
+      dispatch({ type: ACTION.PASTE, payload: { content } })
+    }
+  }
+
   const setNoteDimension = (notes: INote[], { clientX, clientY, boardRef }: any) => {
     const length = notes.length
     const { x, y } = notes[length - 1].clientXY
@@ -75,6 +89,7 @@ function Board() {
   return (
     <>
       <canvas className={s.canvas} ref={canvasRef} />
+
       <section className={s.section}>
         <div
           className={`${s.container} ${isCreateMode ? s.crosshair : ''}`}

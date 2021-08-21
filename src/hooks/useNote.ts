@@ -13,6 +13,7 @@ export const ACTION = Object.freeze({
   UPDATE: 'UPDATE',
   DELETE: 'DELETE',
   DRAG: 'DRAG',
+  PASTE: 'PASTE',
 })
 
 export const useNote = (initialNote = []) => {
@@ -37,6 +38,9 @@ export const useNote = (initialNote = []) => {
         break
       case 'DRAG':
         dragNote(notes, action.payload, setNotes)
+        break
+      case 'PASTE':
+        pasteNote(notes, action.payload, setNotes)
         break
       default:
         notes
@@ -137,6 +141,32 @@ const dragNote = (
 
   storage
     .set(payload.id, note)
+    .then(() => {
+      setNotes(notes)
+      blurActiveElement()
+    })
+    .catch(handleError)
+}
+
+const pasteNote = (
+  prevNotes: INote[],
+  payload: { content: string },
+  setNotes: (notes: INote[]) => void
+) => {
+  const id = nanoid(NANO_SIZE)
+  const note = {
+    id,
+    content: payload.content,
+    width: 144,
+    height: 144,
+    clientXY: { x: 32, y: 32 },
+  }
+  console.log('prevNotes: ', prevNotes)
+  console.log('note: ', note)
+  const notes = [...prevNotes, note]
+
+  storage
+    .set(id, note)
     .then(() => {
       setNotes(notes)
       blurActiveElement()
