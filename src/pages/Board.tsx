@@ -63,6 +63,7 @@ function Board() {
   const handleOnPaste = (e: any) => {
     if (document.activeElement?.tagName === 'BODY') {
       const content = e.clipboardData.getData('Text')
+      console.log('e: ', e)
       dispatch({ type: ACTION.PASTE, payload: { content } })
     }
   }
