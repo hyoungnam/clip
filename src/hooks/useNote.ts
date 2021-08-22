@@ -161,8 +161,6 @@ const pasteNote = (
     height: 144,
     clientXY: { x: 32, y: 32 },
   }
-  console.log('prevNotes: ', prevNotes)
-  console.log('note: ', note)
   const notes = [...prevNotes, note]
 
   storage
