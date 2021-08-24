@@ -64,7 +64,7 @@ const createNote = (
   }
   const notes = [...prevNotes, note]
 
-  storage
+  storage()
     .set(id, note)
     .then(() => setNotes(notes))
     .catch(handleError)
@@ -81,14 +81,16 @@ const createQuickNote = (prevNotes: INote[], setNotes: (notes: INote[]) => void)
   }
   const notes = [...prevNotes, note]
 
-  storage
+  storage()
     .set(id, note)
-    .then(() => setNotes(notes))
+    .then(() => {
+      setNotes(notes)
+    })
     .catch(handleError)
 }
 
 const readNotes = (setNotes: (notes: INote[]) => void) => {
-  storage
+  storage()
     .get()
     .then((notes) => {
       setNotes(notes)
@@ -110,7 +112,7 @@ const updateNote = (
   } as INote
   const notes = prevNotes.map((prevNote) => (prevNote.id === payload.id ? note : prevNote))
 
-  storage
+  storage()
     .set(payload.id, note)
     .then(() => setNotes(notes))
     .catch(handleError)
@@ -122,7 +124,7 @@ const deleteNote = (
 ) => {
   const notes = prevNotes.filter((note) => note.id !== payload.id)
 
-  storage
+  storage()
     .remove(payload.id)
     .then(() => setNotes(notes))
     .catch(handleError)
@@ -139,7 +141,7 @@ const dragNote = (
   } as INote
   const notes = prevNotes.map((prevNote) => (prevNote.id === payload.id ? note : prevNote))
 
-  storage
+  storage()
     .set(payload.id, note)
     .then(() => {
       setNotes(notes)
@@ -163,7 +165,7 @@ const pasteNote = (
   }
   const notes = [...prevNotes, note]
 
-  storage
+  storage()
     .set(id, note)
     .then(() => {
       setNotes(notes)
