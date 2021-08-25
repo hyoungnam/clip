@@ -4,7 +4,6 @@ import { useNote, ACTION } from 'hooks/useNote'
 import { IconQuick, IconAdd } from 'components/Svgs'
 import { Button } from 'components/Button'
 import Note from 'components/Note'
-import { INote } from 'libs/types'
 import s from './Board.module.scss'
 
 function Board() {
@@ -40,11 +39,11 @@ function Board() {
     }
   }
   const handleOnMouseMove = ({ clientX, clientY }: React.MouseEvent) => {
-    isCreateMode && isMouseClicked && setNoteDimension(notes, { clientX, clientY, boardRef })
+    isCreateMode && isMouseClicked && setNoteDimension({ clientX, clientY, boardRef })
   }
   const handleOnMouseUp = () => {
     if (isCreateMode && isMouseClicked) {
-      updateNote(notes, boardRef)
+      updateNote()
       setCreateMode(false)
       setMouseClicked(false)
     }
@@ -67,21 +66,25 @@ function Board() {
     }
   }
 
-  const setNoteDimension = (notes: INote[], { clientX, clientY, boardRef }: any) => {
+  const setNoteDimension = ({ clientX, clientY, boardRef }: any) => {
     const length = notes.length
     const { x, y } = notes[length - 1].clientXY
     const note = boardRef.current.childNodes[length - 1]
     note.style.width = `${clientX - x}px`
     note.style.height = `${clientY - y}px`
   }
-  const updateNote = (notes: INote[], boardRef: React.RefObject<HTMLDivElement>) => {
+  const updateNote = () => {
     const length = notes.length
     if (boardRef.current) {
       const note = boardRef.current.childNodes[length - 1] as HTMLElement
       const id = notes[length - 1].id
       const value = notes[length - 1].content
-      const width = Number(note.style.width.slice(0, -2))
-      const height = Number(note.style.height.slice(0, -2))
+      let width = Number(note.style.width.slice(0, -2))
+      let height = Number(note.style.height.slice(0, -2))
+      if (isMouseClicked && width < 72 && height < 72) {
+        width = 80
+        height = 80
+      }
       dispatch({ type: ACTION.UPDATE, payload: { id, value, width, height } })
     }
   }
