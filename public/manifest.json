@@ -2,7 +2,7 @@
   "short_name": "Clip",
   "name": "Clip Memo",
   "description": "clip your memo!",
-  "version": "1.0",
+  "version": "1.02",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"

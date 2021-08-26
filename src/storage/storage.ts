@@ -6,7 +6,7 @@ export const storage = () => {
   return process.env.NODE_ENV === 'production' ? chromeStorage : localStorages
 }
 
-export const chromeStorage = {
+const chromeStorage = {
   get: () => {
     return new Promise<INote[]>((resolve, reject) => {
       chrome.storage.local.get(null, (response) => {
@@ -25,8 +25,9 @@ export const chromeStorage = {
     return new Promise<void>((resolve, reject) => {
       chrome.storage.local.set({ [addPrefix(key)]: data }, () => {
         const error = chrome.runtime.lastError
-        error ? reject(error) : resolve()
+        error && reject(error)
       })
+      resolve()
     })
   },
   remove: (key: string) => {
