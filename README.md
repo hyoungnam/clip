@@ -5,7 +5,7 @@ You can save your note like that with only one click of Clip. Say goodbye to hea
 
 #### Install 🎉
 
-chrome extension > Link
+chrome extension > [Link](https://chrome.google.com/webstore/detail/clip-memo/lhhlfhfcbodmnhlmganoicageleckpfi)
 
 #### Main Functions: 
 - support text only
