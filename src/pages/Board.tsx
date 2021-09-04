@@ -11,16 +11,16 @@ function Board() {
   const [isMouseClicked, setMouseClicked] = useState(false)
   const [notes, dispatch] = useNote([])
   const canvasRef = useCanvasRef()
-  const boardRef = useRef<any>(null)
+  const boardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     dispatch({ type: ACTION.READ })
   }, [])
 
   useEffect(() => {
-    window.addEventListener('paste', handleOnPaste)
+    document.addEventListener('paste', handleOnPaste)
     return () => {
-      window.removeEventListener('paste', handleOnPaste)
+      document.removeEventListener('paste', handleOnPaste)
     }
   }, [notes])
 
@@ -59,20 +59,31 @@ function Board() {
     dispatch({ type: ACTION.DRAG, payload: { left, top, id } })
   }
 
-  const handleOnPaste = (e: any) => {
-    if (document.activeElement?.tagName === 'BODY') {
+  const handleOnPaste = (e: globalThis.ClipboardEvent) => {
+    if (document.activeElement?.tagName === 'BODY' && e.clipboardData) {
       const content = e.clipboardData.getData('Text')
       dispatch({ type: ACTION.PASTE, payload: { content } })
     }
   }
 
-  const setNoteDimension = ({ clientX, clientY, boardRef }: any) => {
+  const setNoteDimension = ({
+    clientX,
+    clientY,
+    boardRef,
+  }: {
+    clientX: number
+    clientY: number
+    boardRef: React.RefObject<HTMLDivElement>
+  }) => {
     const length = notes.length
     const { x, y } = notes[length - 1].clientXY
-    const note = boardRef.current.childNodes[length - 1]
-    note.style.width = `${clientX - x}px`
-    note.style.height = `${clientY - y}px`
+    if (boardRef.current) {
+      const note = boardRef.current.childNodes[length - 1] as HTMLElement
+      note.style.width = `${clientX - x}px`
+      note.style.height = `${clientY - y}px`
+    }
   }
+
   const updateNote = () => {
     const length = notes.length
     if (boardRef.current) {
