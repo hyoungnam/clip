@@ -60,8 +60,8 @@ function Board() {
   }
 
   const handleOnPaste = (e: globalThis.ClipboardEvent) => {
-    if (document.activeElement?.tagName === 'BODY' && e.clipboardData) {
-      const content = e.clipboardData.getData('Text')
+    if (document.activeElement?.tagName === 'BODY') {
+      const content = e.clipboardData?.getData('Text')
       dispatch({ type: ACTION.PASTE, payload: { content } })
     }
   }
@@ -77,27 +77,23 @@ function Board() {
   }) => {
     const length = notes.length
     const { x, y } = notes[length - 1].clientXY
-    if (boardRef.current) {
-      const note = boardRef.current.childNodes[length - 1] as HTMLElement
-      note.style.width = `${clientX - x}px`
-      note.style.height = `${clientY - y}px`
-    }
+    const note = boardRef.current?.childNodes[length - 1] as HTMLElement
+    note.style.width = `${clientX - x}px`
+    note.style.height = `${clientY - y}px`
   }
 
   const updateNote = () => {
     const length = notes.length
-    if (boardRef.current) {
-      const note = boardRef.current.childNodes[length - 1] as HTMLElement
-      const id = notes[length - 1].id
-      const value = notes[length - 1].content
-      let width = Number(note.style.width.slice(0, -2))
-      let height = Number(note.style.height.slice(0, -2))
-      if (isMouseClicked && width < 72 && height < 72) {
-        width = 80
-        height = 80
-      }
-      dispatch({ type: ACTION.UPDATE, payload: { id, value, width, height } })
+    const note = boardRef.current?.childNodes[length - 1] as HTMLElement
+    const id = notes[length - 1].id
+    const value = notes[length - 1].content
+    let width = Number(note.style.width.slice(0, -2))
+    let height = Number(note.style.height.slice(0, -2))
+    if (isMouseClicked && width < 72 && height < 72) {
+      width = 80
+      height = 80
     }
+    dispatch({ type: ACTION.UPDATE, payload: { id, value, width, height } })
   }
 
   return (
