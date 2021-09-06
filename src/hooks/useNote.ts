@@ -1,7 +1,15 @@
 import { useState } from 'react'
 import { nanoid } from 'nanoid'
 import { NANO_SIZE } from 'libs/constants'
-import { INote } from 'libs/types'
+import {
+  INote,
+  IDispatch,
+  TCreatePayload,
+  TUpdatePayload,
+  TdeletePayload,
+  TdragPayload,
+  TpastePayload,
+} from 'libs/types'
 import { storage } from 'storage'
 import { handleError } from 'storage/handleError'
 import { blurActiveElement } from 'libs/utils'
@@ -19,10 +27,10 @@ export const ACTION = Object.freeze({
 export const useNote = (initialNote = []) => {
   const [notes, setNotes] = useState<INote[]>(initialNote)
 
-  const dispatch = (action: { type: string; payload?: any }) => {
-    switch (action.type) {
+  const dispatch = ({ type, payload }: IDispatch) => {
+    switch (type) {
       case 'CREATE':
-        createNote(notes, action.payload, setNotes)
+        createNote(notes, payload as TCreatePayload, setNotes)
         break
       case 'CREATE_QUICK':
         createQuickNote(notes, setNotes)
@@ -31,16 +39,16 @@ export const useNote = (initialNote = []) => {
         readNotes(setNotes)
         break
       case 'UPDATE':
-        updateNote(notes, action.payload, setNotes)
+        updateNote(notes, payload as TUpdatePayload, setNotes)
         break
       case 'DELETE':
-        deleteNote(notes, action.payload, setNotes)
+        deleteNote(notes, payload as TdeletePayload, setNotes)
         break
       case 'DRAG':
-        dragNote(notes, action.payload, setNotes)
+        dragNote(notes, payload as TdragPayload, setNotes)
         break
       case 'PASTE':
-        pasteNote(notes, action.payload, setNotes)
+        pasteNote(notes, payload as TpastePayload, setNotes)
         break
       default:
         notes
@@ -51,7 +59,7 @@ export const useNote = (initialNote = []) => {
 
 const createNote = (
   prevNotes: INote[],
-  payload: { clientX: number; clientY: number },
+  payload: TCreatePayload,
   setNotes: (notes: INote[]) => void
 ) => {
   const id = nanoid(NANO_SIZE)
@@ -101,7 +109,7 @@ const readNotes = (setNotes: (notes: INote[]) => void) => {
 
 const updateNote = (
   prevNotes: INote[],
-  payload: { id: string; value: string; width: number; height: number },
+  payload: TUpdatePayload,
   setNotes: (notes: INote[]) => void
 ) => {
   const note = {
@@ -119,7 +127,7 @@ const updateNote = (
 }
 const deleteNote = (
   prevNotes: INote[],
-  payload: { id: string },
+  payload: TdeletePayload,
   setNotes: (notes: INote[]) => void
 ) => {
   const notes = prevNotes.filter((note) => note.id !== payload.id)
@@ -132,7 +140,7 @@ const deleteNote = (
 
 const dragNote = (
   prevNotes: INote[],
-  payload: { id: string; left: number; top: number },
+  payload: TdragPayload,
   setNotes: (notes: INote[]) => void
 ) => {
   const note = {
@@ -152,7 +160,7 @@ const dragNote = (
 
 const pasteNote = (
   prevNotes: INote[],
-  payload: { content: string },
+  payload: TpastePayload,
   setNotes: (notes: INote[]) => void
 ) => {
   const id = nanoid(NANO_SIZE)
