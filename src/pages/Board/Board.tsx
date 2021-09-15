@@ -3,7 +3,7 @@ import { useCanvasRef } from 'hooks/useCanvasRef'
 import { useNote, ACTION } from 'hooks/useNote'
 import { IconQuick, IconAdd } from 'components/Svgs'
 import { Button } from 'components/Button'
-import Note from 'components/Note'
+import { Note } from 'components/Note'
 import s from './Board.module.scss'
 
 function Board() {

@@ -4,7 +4,15 @@ import { ACTION } from 'hooks/useNote'
 import { INote } from 'libs/types'
 import s from './Note.module.scss'
 
-function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCreateMode }: INote) {
+export function Note({
+  id,
+  content,
+  width,
+  height,
+  clientXY: { x, y },
+  dispatch,
+  isCreateMode,
+}: INote) {
   const [isFocus, setFocus] = useState(false)
   const [isDragged, setDragged] = useState(false)
   const noteRef = useRef<HTMLDivElement>(null)
@@ -74,4 +82,3 @@ function Note({ id, content, width, height, clientXY: { x, y }, dispatch, isCrea
     </>
   )
 }
-export default Note
