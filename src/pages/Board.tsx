@@ -15,14 +15,11 @@ function Board() {
 
   useEffect(() => {
     dispatch({ type: ACTION.READ })
-  }, [])
-
-  useEffect(() => {
     document.addEventListener('paste', handleOnPaste)
     return () => {
       document.removeEventListener('paste', handleOnPaste)
     }
-  }, [notes])
+  }, [])
 
   const handleOnClickQuick = () => {
     dispatch({ type: ACTION.CREATE_QUICK })
